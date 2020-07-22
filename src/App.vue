@@ -13,20 +13,6 @@
 </template>
 
 <script>
-window.storyblok.init({
-    accessToken: process.env.VUE_APP_ACCESS_TOKEN,
-});
-
-window.storyblok.on(['published', 'change'], function() {
-    location.reload(true);
-});
-
-window.storyblok.pingEditor(function() {
-    if (window.storyblok.inEditor) {
-        window.storyblok.enterEditmode();
-    }
-});
-
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
@@ -48,11 +34,11 @@ export default {
             this.posts = response.data.stories;
         });
 
-        const pageContent = this.$root.getPage('home').then((response) => {
+        const homeContent = this.$root.getStory('home').then((response) => {
             this.homeContent = response.data.story.content;
         });
 
-        Promise.all([allPosts, pageContent]).then(() => {
+        Promise.all([allPosts, homeContent]).then(() => {
             this.loading = false;
         });
     },

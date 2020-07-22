@@ -11,12 +11,12 @@ export default {
     data() {
         return {
             loading: true,
-            post: {},
+            post: null,
         };
     },
     created() {
         const slug = this.$route.params.post;
-        this.$root.getPost(slug).then((response) => {
+        this.$root.getStory('posts/' + slug).then((response) => {
             this.post = response.data.story;
             this.loading = false;
         });

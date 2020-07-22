@@ -7,11 +7,26 @@ import router from './router';
 import StoryblokVue from 'storyblok-vue';
 import StoryblokClient from 'storyblok-js-client';
 
+const usesBridge = process.env.VUE_APP_STORYBLOK_BRIDGE;
 const storyblokToken = process.env.VUE_APP_ACCESS_TOKEN;
-const version = process.env.VUE_APP_STORYBLOK_BRIDGE ? 'draft' : 'published';
+const version = usesBridge ? 'draft' : 'published';
 
 Vue.use(StoryblokVue);
 Vue.use(Buefy);
+
+if (usesBridge) {
+    window.storyblok.init();
+
+    window.storyblok.on(['published', 'change'], function() {
+        location.reload(true);
+    });
+
+    window.storyblok.pingEditor(function() {
+        if (window.storyblok.inEditor) {
+            window.storyblok.enterEditmode();
+        }
+    });
+}
 
 Vue.config.productionTip = false;
 
@@ -36,14 +51,7 @@ new Vue({
                 })
                 .catch((error) => console.log(error));
         },
-        getPost(slug) {
-            return this.storyapi
-                .get('cdn/stories/posts/' + slug, {
-                    version,
-                })
-                .catch((error) => console.log(error));
-        },
-        getPage(slug) {
+        getStory(slug) {
             return this.storyapi
                 .get('cdn/stories/' + slug, {
                     version,
