@@ -3,10 +3,10 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "serve": "vue-cli-service serve",
+        "serve": "STORYBLOK_BRIDGE=false vue-cli-service serve",
         "serve-with-bridge": "STORYBLOK_BRIDGE=true vue-cli-service serve",
-        "build": "STORYBLOK_BRIDGE=true vue-cli-service build",
-        "build-with-bridge": "vue-cli-service build",
+        "build": "STORYBLOK_BRIDGE=false vue-cli-service build",
+        "build-with-bridge": "STORYBLOK_BRIDGE=true vue-cli-service build",
         "lint": "vue-cli-service lint"
     },
     "dependencies": {

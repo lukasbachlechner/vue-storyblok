@@ -42,6 +42,5 @@ export default {
         homeContent: Object,
         loading: Boolean,
     },
-    created() {},
 };
 </script>

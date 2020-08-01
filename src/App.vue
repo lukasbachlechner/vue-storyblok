@@ -5,6 +5,7 @@
             <router-view
                 :posts="posts"
                 :homeContent="homeContent"
+                :aboutContent="aboutContent"
                 :loading="loading"
             />
         </main>
@@ -26,6 +27,7 @@ export default {
         return {
             posts: null,
             homeContent: null,
+            aboutContent: null,
             loading: true,
         };
     },
@@ -38,7 +40,11 @@ export default {
             this.homeContent = response.data.story.content;
         });
 
-        Promise.all([allPosts, homeContent]).then(() => {
+        const aboutContent = this.$root.getStory('about').then((response) => {
+            this.aboutContent = response.data.story.content;
+        });
+
+        Promise.all([allPosts, homeContent, aboutContent]).then(() => {
             this.loading = false;
         });
     },
